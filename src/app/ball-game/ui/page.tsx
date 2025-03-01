@@ -178,7 +178,8 @@ commands.spawn((
             (
                 player_movement, 
                 coin_collection, 
-                update_score_text
+                update_score_text,
+                check_respawn_coins
             )
         )
         .run();
@@ -187,7 +188,8 @@ commands.spawn((
           
           <p className="mb-4">
             Notice that we&apos;ve added <code>update_score_text</code> to the <code>Update</code> schedule alongside
-            our other systems. This ensures the score text is updated every frame.
+            our other systems. This ensures the score text is updated every frame. We also added the <code>check_respawn_coins</code>
+            system to respawn coins when they&apos;re all collected.
           </p>
         </section>
 
@@ -201,42 +203,7 @@ commands.spawn((
           
           <div className="space-y-6">
             {/* Styling the Text */}
-            <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-md">
-              <h3 className="text-lg font-semibold mb-2">Styling the Text</h3>
-              
-              <pre className="bg-gray-900 text-gray-100 rounded-md p-3 mb-2 overflow-x-auto">
-                <code>{`// Update the score text command in setup
-commands.spawn((
-    Text::new("Score: 0"),
-    TextFont {
-        font: asset_server.load("fonts/FiraSans-Bold.ttf"),
-        font_size: 30.0,
-        ..default()
-    },
-    TextStyle {
-        color: Color::srgb(1.0, 0.9, 0.0),  // Gold color
-        ..default()
-    },
-    TextShadow {
-        color: Color::srgb(0.0, 0.0, 0.0),  // Black shadow
-        offset: Vec2::new(1.0, 1.0),        // Shadow offset
-        ..default()
-    },
-    Node {
-        position_type: PositionType::Absolute,
-        top: Val::Px(10.0),
-        left: Val::Px(10.0),
-        ..default()
-    },
-    ScoreText,
-));`}</code>
-              </pre>
-              
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                This adds styling to make the text gold with a black shadow, making it more visible and thematic
-                for a coin collection game.
-              </p>
-            </div>
+    
             
             {/* Score Animation */}
             <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-md">
@@ -294,6 +261,35 @@ fn animate_score_text(
                 then smoothly return to normal size.
               </p>
             </div>
+
+            {/* Coin Respawning */}
+            <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-md">
+              <h3 className="text-lg font-semibold mb-2">Coin Respawning</h3>
+              
+              <p className="mb-2">
+                Let&apos;s implement a system to respawn all coins once they&apos;ve been collected:
+              </p>
+              
+              <pre className="bg-gray-900 text-gray-100 rounded-md p-3 mb-2 overflow-x-auto">
+                <code>{`fn check_respawn_coins(
+    coin_query: Query<&Coin>,
+    mut commands: Commands,
+    mut meshes: ResMut<Assets<Mesh>>,
+    mut materials: ResMut<Assets<StandardMaterial>>,
+) {
+    // If no coins are left, respawn them
+    if coin_query.iter().count() == 0 {
+        println!("Respawning coins!");
+        spawn_coins(&mut commands, &mut meshes, &mut materials);
+    }
+}`}</code>
+              </pre>
+              
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                This system checks if there are any coins left in the world. If not, it calls our <code>spawn_coins</code> function
+                to create a new set of coins, allowing the player to continue playing.
+              </p>
+            </div>
           </div>
           
           <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mt-4 mb-4 dark:bg-yellow-900 dark:text-yellow-200">
@@ -328,6 +324,7 @@ fn animate_score_text(
             <li>Press spacebar to jump</li>
             <li>Collect the coins by moving the ball over them</li>
             <li>Watch the score update in the UI as you collect coins</li>
+            <li>After collecting all coins, watch them respawn for continued play</li>
           </ol>
           
           <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4 dark:bg-green-900 dark:text-green-200">
@@ -338,11 +335,311 @@ fn animate_score_text(
             <ul className="list-disc pl-5 space-y-1 mt-2">
               <li>A 3D arena with walls</li>
               <li>Player-controlled ball with movement and jumping</li>
-              <li>Collectible coins</li>
+              <li>Collectible coins that respawn when all are collected</li>
               <li>UI for score tracking</li>
             </ul>
             <p className="mt-2">
               These fundamentals can be expanded to create more complex games and experiences.
+            </p>
+          </div>
+        </section>
+
+        {/* Section 7: Full Game Code */}
+        <section>
+          <h2 className="text-2xl font-bold mb-4">7. Full Game Code</h2>
+          
+          <p className="mb-4">
+            Here&apos;s the complete code for our ball game, including all the features we&apos;ve implemented:
+          </p>
+          
+          <pre className="bg-gray-900 text-gray-100 rounded-md p-4 mb-4 overflow-x-auto">
+            <code>{`use bevy::prelude::*;
+
+fn main() {
+    App::new()
+        .add_plugins(DefaultPlugins)
+        .add_systems(Startup, setup)
+        .add_systems(
+            Update, 
+            (
+                player_movement, 
+                coin_collection, 
+                update_score_text,
+                check_respawn_coins
+            )
+        )
+        .run();
+}
+
+// Components
+#[derive(Component)]
+struct Player {
+    velocity_y: f32,
+    is_jumping: bool,
+}
+
+#[derive(Component)]
+struct Coin;
+
+#[derive(Component)]
+struct Wall;
+
+#[derive(Component)]
+struct ScoreText;
+
+// Resource
+#[derive(Resource)]
+struct GameState {
+    score: u32,
+}
+
+// Set up the game arena, player, lights, camera, and UI
+fn setup(
+    mut commands: Commands,
+    mut meshes: ResMut<Assets<Mesh>>,
+    mut materials: ResMut<Assets<StandardMaterial>>,
+    asset_server: Res<AssetServer>,
+) {
+    // Initialize game state
+    commands.insert_resource(GameState { score: 0 });
+
+    let arena_size = 9.0;
+    
+    // Floor (thin cube)
+    commands.spawn((
+        Mesh3d(meshes.add(Cuboid::new(arena_size * 2.0, 0.1, arena_size * 2.0))),
+        MeshMaterial3d(materials.add(Color::srgb_u8(124, 144, 255))),
+        Transform::from_xyz(0.0, -0.05, 0.0),
+    ));
+
+    // Walls
+    let wall_height = 1.0;
+    let wall_thickness = 0.2;
+
+    // North wall
+    commands.spawn((
+        Wall,
+        Mesh3d(meshes.add(Cuboid::new(arena_size * 2.0, wall_height, wall_thickness))),
+        MeshMaterial3d(materials.add(Color::srgb_u8(124, 144, 255))),
+        Transform::from_xyz(0.0, wall_height / 2.0, -arena_size),
+    ));
+
+    // South wall
+    commands.spawn((
+        Wall,
+        Mesh3d(meshes.add(Cuboid::new(arena_size * 2.0, wall_height, wall_thickness))),
+        MeshMaterial3d(materials.add(Color::srgb_u8(124, 144, 255))),
+        Transform::from_xyz(0.0, wall_height / 2.0, arena_size),
+    ));
+
+    // East wall
+    commands.spawn((
+        Wall,
+        Mesh3d(meshes.add(Cuboid::new(wall_thickness, wall_height, arena_size * 2.0))),
+        MeshMaterial3d(materials.add(Color::srgb_u8(124, 144, 255))),
+        Transform::from_xyz(arena_size, wall_height / 2.0, 0.0),
+    ));
+
+    // West wall
+    commands.spawn((
+        Wall,
+        Mesh3d(meshes.add(Cuboid::new(wall_thickness, wall_height, arena_size * 2.0))),
+        MeshMaterial3d(materials.add(Color::srgb_u8(124, 144, 255))),
+        Transform::from_xyz(-arena_size, wall_height / 2.0, 0.0),
+    ));
+
+    // Player (ball)
+    commands.spawn((
+        Player {
+            velocity_y: 0.0,
+            is_jumping: false,
+        },
+        Mesh3d(meshes.add(Sphere::new(0.5))),
+        MeshMaterial3d(materials.add(Color::srgb_u8(255, 100, 100))),
+        Transform::from_xyz(0.0, 0.5, 0.0),
+    ));
+
+    // Light
+    commands.spawn((
+        PointLight {
+            shadows_enabled: true,
+            ..default()
+        },
+        Transform::from_xyz(4.0, 8.0, 4.0),
+    ));
+    
+    // Camera - positioned for a top-down view
+    commands.spawn((
+        Camera3d::default(),
+        Transform::from_xyz(0.0, 15.0, 15.0).looking_at(Vec3::ZERO, Vec3::Y),
+    ));
+    
+    // Score Text
+    commands.spawn((
+        Text::new("Score: 0"),
+        TextFont {
+            font: asset_server.load("fonts/FiraSans-Bold.ttf"),
+            font_size: 30.0,
+            ..default()
+        },
+        Node {
+            position_type: PositionType::Absolute,
+            top: Val::Px(10.0),
+            left: Val::Px(10.0),
+            ..default()
+        },
+        ScoreText,
+    ));
+    
+    // Spawn initial coins
+    spawn_coins(&mut commands, &mut meshes, &mut materials);
+}
+
+fn spawn_coins(
+    commands: &mut Commands,
+    meshes: &mut ResMut<Assets<Mesh>>,
+    materials: &mut ResMut<Assets<StandardMaterial>>,
+) {
+    // Create a shared mesh and material for all coins
+    let coin_mesh = meshes.add(Cylinder::new(0.2, 0.05));
+    let coin_material = materials.add(Color::srgb_u8(255, 255, 0)); // Gold color
+    
+    // Define coin positions
+    let positions = [
+        Vec3::new(3.0, 0.2, 3.0),
+        Vec3::new(-3.0, 0.2, 3.0),
+        Vec3::new(3.0, 0.2, -3.0),
+        Vec3::new(-3.0, 0.2, -3.0),
+        Vec3::new(0.0, 0.2, 0.0),
+    ];
+    
+    // Spawn each coin
+    for position in positions.iter() {
+        commands.spawn((
+            Coin,
+            Mesh3d(coin_mesh.clone()),
+            MeshMaterial3d(coin_material.clone()),
+            Transform::from_translation(*position),
+        ));
+    }
+}
+
+fn player_movement(
+    keyboard_input: Res<ButtonInput<KeyCode>>,
+    time: Res<Time>,
+    mut query: Query<(&mut Player, &mut Transform)>,
+) {
+    let (mut player, mut player_transform) = query.single_mut();
+    let mut direction = Vec3::ZERO;
+
+    // Get player input for horizontal movement
+    if keyboard_input.pressed(KeyCode::KeyW) {
+        direction.z -= 1.0;
+    }
+    if keyboard_input.pressed(KeyCode::KeyS) {
+        direction.z += 1.0;
+    }
+    if keyboard_input.pressed(KeyCode::KeyA) {
+        direction.x -= 1.0;
+    }
+    if keyboard_input.pressed(KeyCode::KeyD) {
+        direction.x += 1.0;
+    }
+
+    // Handle jumping
+    let is_on_ground = player_transform.translation.y <= 0.5;
+    
+    if is_on_ground {
+        player.velocity_y = 0.0;
+        player.is_jumping = false;
+        player_transform.translation.y = 0.5; // Ensure player is exactly on the ground
+    }
+
+    // Check for jump input (Space key)
+    if keyboard_input.just_pressed(KeyCode::Space) && is_on_ground {
+        player.velocity_y = 10.0; // Initial jump velocity
+        player.is_jumping = true;
+    }
+
+    // Apply gravity and update vertical position
+    if player.is_jumping || !is_on_ground {
+        // Apply gravity
+        player.velocity_y -= 20.0 * time.delta_secs(); // Gravity constant
+        
+        // Update vertical position
+        player_transform.translation.y += player.velocity_y * time.delta_secs();
+        
+        // Prevent going below the ground
+        if player_transform.translation.y < 0.5 {
+            player_transform.translation.y = 0.5;
+            player.is_jumping = false;
+        }
+    }
+
+    // Normalize direction and apply horizontal movement
+    if direction != Vec3::ZERO {
+        direction = direction.normalize();
+        
+        // Apply horizontal movement
+        player_transform.translation.x += direction.x * 5.0 * time.delta_secs();
+        player_transform.translation.z += direction.z * 5.0 * time.delta_secs();
+        
+        // Keep the player within bounds
+        let arena_size = 8.5; // Slightly smaller than the walls
+        player_transform.translation.x = player_transform.translation.x.clamp(-arena_size, arena_size);
+        player_transform.translation.z = player_transform.translation.z.clamp(-arena_size, arena_size);
+    }
+}
+
+fn coin_collection(
+    mut commands: Commands,
+    mut game_state: ResMut<GameState>,
+    player_query: Query<&Transform, With<Player>>,
+    coin_query: Query<(Entity, &Transform), With<Coin>>,
+) {
+    let player_transform = player_query.single();
+    
+    for (coin_entity, coin_transform) in coin_query.iter() {
+        // Check distance between player and coin
+        let distance = player_transform.translation.distance(coin_transform.translation);
+        
+        // If close enough, collect the coin
+        if distance < 1.0 {
+            commands.entity(coin_entity).despawn();
+            game_state.score += 1;
+            println!("Coin collected! Score: {}", game_state.score);
+        }
+    }
+}
+
+fn update_score_text(
+    game_state: Res<GameState>, 
+    mut query: Query<&mut Text, With<ScoreText>>
+) {
+    if let Ok(mut text) = query.get_single_mut() {
+        **text = format!("Score: {}", game_state.score);
+    }
+}
+
+fn check_respawn_coins(
+    coin_query: Query<&Coin>,
+    mut commands: Commands,
+    mut meshes: ResMut<Assets<Mesh>>,
+    mut materials: ResMut<Assets<StandardMaterial>>,
+) {
+    // If no coins are left, respawn them
+    if coin_query.iter().count() == 0 {
+        println!("Respawning coins!");
+        spawn_coins(&mut commands, &mut meshes, &mut materials);
+    }
+}`}</code>
+          </pre>
+          
+          <div className="bg-blue-100 border-l-4 border-blue-500 text-blue-700 p-4 mb-4 dark:bg-blue-900 dark:text-blue-200">
+            <p className="font-bold">Adding More Features:</p>
+            <p>
+              This code provides a complete game with all the features we&apos;ve discussed. You can use it as a foundation
+              to build more complex games by adding new features, mechanics, and polish.
             </p>
           </div>
         </section>
