@@ -1,36 +1,45 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Bevy Game Development Guide
 
-## Getting Started
+## Overview
+This repository contains a comprehensive guide to game development with the Bevy engine. It's structured as a step-by-step tutorial that takes you from the basics to building a complete 3D ball game.
 
-First, run the development server:
+Created cuz I was bored and wanted to learn something new :D.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Contents
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Getting Started
+- Introduction to Bevy
+- Setting up your development environment
+- Creating your first Bevy project
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Basics
+- Basic Shapes - Understanding meshes and materials
+- Lighting - Different types of lights and their properties
+- Camera - Setting up and controlling the camera
+- First 3D Scene - Putting it all together
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Ball Game Tutorial
+A complete 4-part tutorial to create a 3D ball game:
+- Game Setup - Creating the arena, player, and collectibles
+- Player Movement - Implementing controls and physics
+- Collectibles - Adding items to collect and score tracking
+- UI & Scoring - Creating a user interface to display the score
 
-## Learn More
+## How to Use This Guide
+Each section builds on the previous ones, so it's recommended to follow them in order. The code examples are designed to be copy-pasted and run with minimal modifications.
 
-To learn more about Next.js, take a look at the following resources:
+## Requirements
+- Rust programming language
+- Bevy engine (version 0.15+)
+- Basic understanding of game development concepts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Why I Created This
+I created this guide because of my love for game development and to help others learn the Bevy engine, which I believe is one of the most exciting game engines for Rust developers.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## License
+Feel free to use this guide for learning purposes. If you use any code or concepts in your own projects, attribution is appreciated but not required.
 
-## Deploy on Vercel
+## Contact
+If you have questions or suggestions, or even improvements, please open an issue or submit a pull request.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Happy game development!
