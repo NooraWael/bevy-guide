@@ -1,7 +1,24 @@
-import type { NextConfig } from "next";
+import nextra from "nextra";
 
-const nextConfig: NextConfig = {
-  /* config options here */
-};
+const withNextra = nextra({
+  defaultShowCopyCode: true,
+  search: true,
+  mdxOptions: {
+    rehypePrettyCodeOptions: {
+      theme: {
+        dark: "dark-plus",
+        light: "min-light",
+      },
+    },
+  },
+});
 
-export default nextConfig;
+export default withNextra({
+  images: {
+    unoptimized: true,
+  },
+  output: "export",
+  reactStrictMode: true,
+  trailingSlash: true,
+  poweredByHeader: false,
+});
