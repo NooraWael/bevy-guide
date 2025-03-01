@@ -10,12 +10,12 @@ const navigation = [
   },
   {
     name: "Basics",
-    href: "/basic",
+    href: "/basics",
     children: [
-      { name: "Planes", href: "/basic-shapes/planes" },
-      { name: "Spheres", href: "/basic-shapes/spheres" },
-      { name: "Cubes", href: "/basic-shapes/cubes" },
-      { name: "First 3D Scene", href: "/basic-shapes/first-scene" },
+      { name: "Basic Shapes", href: "/basics/basic-shapes" },
+      { name: "Lighting", href: "/basics/lights" },
+      { name: "Camera", href: "/basics/camera" },
+      { name: "First 3D Scene", href: "/basics/first-scene" },
     ],
   },
   {

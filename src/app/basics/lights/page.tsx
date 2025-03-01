@@ -2,7 +2,6 @@
 
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 
 export default function Lights() {
   return (
@@ -83,17 +82,7 @@ commands.spawn((
     Transform::from_xyz(4.0, 8.0, 4.0),
 ));
 
-// Colored point light with custom intensity
-commands.spawn((
-    PointLight {
-        color: Color::rgb(1.0, 0.5, 0.2),  // Orange light
-        intensity: 1500.0,                  // Brighter than default
-        range: 20.0,                        // Light reaches further
-        shadows_enabled: true,
-        ..default()
-    },
-    Transform::from_xyz(0.0, 5.0, 0.0),
-));`}</code>
+`}</code>
               </pre>
               
               <div className="text-sm text-gray-600 dark:text-gray-400">
@@ -173,7 +162,7 @@ commands.spawn((
               <pre className="bg-gray-900 text-gray-100 rounded-md p-3 mb-3 overflow-x-auto">
                 <code>{`// Add global ambient light
 commands.insert_resource(AmbientLight {
-    color: Color::rgb(0.1, 0.1, 0.1),  // Dim, bluish ambient light
+    color: Color::srgb(0.1, 0.1, 0.1),  // Dim, bluish ambient light
     brightness: 0.2,                   // Low intensity
 });`}</code>
               </pre>
