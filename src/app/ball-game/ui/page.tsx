@@ -195,72 +195,14 @@ commands.spawn((
 
         {/* Section 5: Enhancing the UI */}
         <section>
-          <h2 className="text-2xl font-bold mb-4">5. Enhancing the UI</h2>
+          <h2 className="text-2xl font-bold mb-4">5. Enhancing </h2>
           
           <p className="mb-4">
-            Our basic score display works, but we can enhance it to make it more appealing:
+            Our basic score display works, let us add some polishes to the game 
           </p>
           
           <div className="space-y-6">
-            {/* Styling the Text */}
-    
-            
-            {/* Score Animation */}
-            <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-md">
-              <h3 className="text-lg font-semibold mb-2">Score Change Animation</h3>
-              
-              <p className="mb-2">
-                We can animate the score text when it changes to provide visual feedback:
-              </p>
-              
-              <pre className="bg-gray-900 text-gray-100 rounded-md p-3 mb-2 overflow-x-auto">
-                <code>{`// Add a new component to track score changes
-#[derive(Component)]
-struct ScoreAnimation {
-    timer: Timer,
-    scale: f32,
-}
-
-// Modify the update_score_text system
-fn update_score_text(
-    game_state: Res<GameState>, 
-    mut query: Query<(&mut Text, &mut ScoreAnimation), With<ScoreText>>
-) {
-    if let Ok((mut text, mut animation)) = query.get_single_mut() {
-        // Update the text
-        **text = format!("Score: {}", game_state.score);
-        
-        // Start animation when score changes
-        animation.scale = 1.5;  // Enlarged scale
-        animation.timer.reset();
-    }
-}
-
-// Add a system to animate the score text
-fn animate_score_text(
-    time: Res<Time>,
-    mut query: Query<(&mut Node, &mut ScoreAnimation)>,
-) {
-    for (mut node, mut animation) in query.iter_mut() {
-        animation.timer.tick(time.delta());
-        
-        // Gradually reduce scale back to normal
-        if animation.scale > 1.0 {
-            animation.scale = 1.0 + 
-                (1.5 - 1.0) * (1.0 - animation.timer.percent());
-            
-            // Apply the scale to the node
-            node.scale = Vec2::splat(animation.scale);
-        }
-    }
-}`}</code>
-              </pre>
-              
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                This is a more advanced feature that would make the score text briefly enlarge when it changes,
-                then smoothly return to normal size.
-              </p>
-            </div>
+         
 
             {/* Coin Respawning */}
             <div className="bg-gray-100 dark:bg-gray-800 p-4 rounded-md">
