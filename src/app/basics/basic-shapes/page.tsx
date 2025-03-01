@@ -7,8 +7,8 @@ export default function BasicShapes() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="mb-6">
-        <Link href="/" className="text-blue-500 hover:underline mb-4 inline-block">
-          ← Back to Home
+        <Link href="/basics" className="text-blue-500 hover:underline mb-4 inline-block">
+          ← Back to Basics
         </Link>
       </div>
 
@@ -247,11 +247,11 @@ materials.add(StandardMaterial {
           </ul>
           
           <div className="flex justify-between items-center mt-8">
-            <Link href="/getting-started/first-scene" className="text-blue-500 hover:underline">
-              ← First 3D Scene
+            <Link href="/basics" className="text-blue-500 hover:underline">
+              ← Basics
             </Link>
-            <Link href="/ball-game/setup" className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
-              Ball Game Setup →
+            <Link href="/basics/lights" className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded">
+              Lighting →
             </Link>
           </div>
         </section>

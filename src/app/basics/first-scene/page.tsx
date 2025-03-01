@@ -112,7 +112,7 @@ fn setup(
 
           <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4 dark:bg-yellow-900 dark:text-yellow-200">
             <p className="font-bold">Note:</p>
-            <p>This structure is common to most Bevy applications. The <code>setup</code> function runs once when the application starts, and we'll use it to create all our initial entities.</p>
+            <p>This structure is common to most Bevy applications. The <code>setup</code> function runs once when the application starts, and we&apos;ll use it to create all our initial entities.</p>
           </div>
         </section>
 

@@ -318,7 +318,7 @@ impl Default for FrameCount {
           </ul>
 
           <p className="mb-6">
-            In the next section, we&apos;ll learn how to creates shapes
+            In the next section, we&apos;ll learn how to create basic structures 
           </p>
 
           <div className="flex justify-between items-center">
@@ -326,10 +326,10 @@ impl Default for FrameCount {
               ← Home
             </Link>
             <Link
-              href="/basic-shapes"
+              href="/basics"
               className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded"
             >
-              Basic Shapes →
+              Basics →
             </Link>
           </div>
         </section>

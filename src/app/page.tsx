@@ -26,19 +26,19 @@ export default function Home() {
               Setup Bevy and create your first 3D scene
             </p>
           </a>
-          <a href="/basic-shapes" className="flex flex-col items-center justify-center p-6 rounded-lg border border-gray-200 bg-white/5 hover:bg-white/10 dark:border-gray-800 transition-all hover:scale-105">
+          <a href="/basics" className="flex flex-col items-center justify-center p-6 rounded-lg border border-gray-200 bg-white/5 hover:bg-white/10 dark:border-gray-800 transition-all hover:scale-105">
             <h2 className="text-xl font-bold mb-2">Basic Shapes →</h2>
             <p className="text-gray-600 dark:text-gray-400 text-center">
               Add planes, spheres and cubes to your game
             </p>
           </a>
-          <a href="/ball-movement" className="flex flex-col items-center justify-center p-6 rounded-lg border border-gray-200 bg-white/5 hover:bg-white/10 dark:border-gray-800 transition-all hover:scale-105">
+          <a href="/ball-game/movement" className="flex flex-col items-center justify-center p-6 rounded-lg border border-gray-200 bg-white/5 hover:bg-white/10 dark:border-gray-800 transition-all hover:scale-105">
             <h2 className="text-xl font-bold mb-2">Ball Movement →</h2>
             <p className="text-gray-600 dark:text-gray-400 text-center">
               Make the ball move with keyboard controls
             </p>
           </a>
-          <a href="/complete-game" className="flex flex-col items-center justify-center p-6 rounded-lg border border-gray-200 bg-white/5 hover:bg-white/10 dark:border-gray-800 transition-all hover:scale-105">
+          <a href="/ball-game" className="flex flex-col items-center justify-center p-6 rounded-lg border border-gray-200 bg-white/5 hover:bg-white/10 dark:border-gray-800 transition-all hover:scale-105">
             <h2 className="text-xl font-bold mb-2">Complete Game →</h2>
             <p className="text-gray-600 dark:text-gray-400 text-center">
               Add scoring, collectible points and a mini-map

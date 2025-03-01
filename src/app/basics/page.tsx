@@ -7,8 +7,8 @@ export default function BasicsHome() {
   return (
     <div className="container mx-auto px-4 py-8 max-w-4xl">
       <div className="mb-6">
-        <Link href="/" className="text-blue-500 hover:underline mb-4 inline-block">
-          ← Back to Home
+        <Link href="/getting-started" className="text-blue-500 hover:underline mb-4 inline-block">
+          ← Back to Getting Started
         </Link>
       </div>
 
@@ -29,7 +29,7 @@ export default function BasicsHome() {
         <div className="border border-gray-300 dark:border-gray-700 rounded-md p-4 hover:shadow-md transition-shadow">
           <h2 className="text-xl font-bold mb-2">Basic Shapes</h2>
           <p className="mb-4">Learn about the core 3D shapes in Bevy and how to use them to create objects in your game world.</p>
-          <Link href="/basics/shapes" className="text-blue-500 hover:underline">
+          <Link href="/basics/basic-shapes" className="text-blue-500 hover:underline">
             Explore shapes →
           </Link>
         </div>

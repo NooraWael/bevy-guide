@@ -28,15 +28,6 @@ const navigation = [
       { name: "UI & Scoring", href: "/ball-game/ui" },
     ],
   },
-  {
-    name: "Full Game Loop",
-    href: "/full-game",
-    children: [
-      { name: "Win Conditions", href: "/full-game/win-conditions" },
-      { name: "Game State", href: "/full-game/game-state" },
-      { name: "Levels", href: "/full-game/levels" },
-    ],
-  },
 ];
 
 export default function Sidebar() {
